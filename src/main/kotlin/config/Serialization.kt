@@ -1,4 +1,4 @@
-package dev.mrussu.pharmacy
+package dev.mrussu.pharmacy.config
 
 import freemarker.cache.*
 import io.ktor.http.*

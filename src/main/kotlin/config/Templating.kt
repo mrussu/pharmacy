@@ -1,4 +1,4 @@
-package dev.mrussu.pharmacy
+package dev.mrussu.pharmacy.config
 
 import freemarker.cache.*
 import io.ktor.http.*
@@ -13,10 +13,8 @@ import io.ktor.server.routing.*
 import java.sql.Connection
 import java.sql.DriverManager
 
-fun Application.configureRouting() {
-    routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
+fun Application.configureTemplating() {
+    install(FreeMarker) {
+        templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
     }
 }

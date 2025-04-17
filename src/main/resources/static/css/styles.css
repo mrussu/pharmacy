@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+    font-weight: normal;
+}
+body {
+    width: 100%;
+    background: #ffffff;
+    font-size: large;
+    font-family: 'Open Sans', Arial, sans-serif;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+}
+h1 {
+    font-size: xx-large;
+}
+h2 {
+    font-size: x-large;
+}
+h1, h2 {
+    text-align: center;
+    font-weight: bold;
+}
+img {
+    display: block;
+    margin: 0
+}
+a, a:visited {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: #003070;
+    text-decoration: underline;
+}
+a:active {
+    color: #0b4c91;
+}
+strong {
+    font-weight: bold;
+}
+input, select {
+    width: 100%;
+    font-size: large;
+    padding: 0.5rem;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    font-weight: bold;
+    white-space: nowrap;
+    background-color: #f2f2f2;
+}
+.container {
+    max-width: 970px;
+    min-width: 320px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.menu {
+    max-width: 320px;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+}
+.menu li {
+    text-align: center;
+}
+.menu li a {
+    font-size: x-large;
+}
+.menu li a:hover {
+}
+.use-by-table {
+}
+.use-by-table th,
+.use-by-table td {
+    text-align: center;
+}
+.use-by-table td:first-child,
+.use-by-table th:first-child {
+    text-align: left;
+}
+.use-by-table tbody tr {
+    cursor: pointer;
+}
+.use-by-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.use-by-table tbody tr:hover {
+    background-color: #ffeb3b;
+    transition: background-color 0.3s ease;
+}
+.expires-date {
+    color: #F44336;
+    font-weight: bold;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+.modal-content {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+.modal-header {
+    position: relative;
+    background-color: #f2f2f2;
+    padding: 8px;
+}
+.modal-body {
+    padding: 0 8px 8px 8px;
+}
+.modal-title {
+    font-weight: bold;
+}
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 42px;
+    line-height: 42px;
+    font-size: xx-large;
+    text-align: center;
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
+@media (max-width: 768px) {
+    .column-location {
+        display: none;
+    }
+}

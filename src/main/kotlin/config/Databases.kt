@@ -1,5 +1,7 @@
-package dev.mrussu.pharmacy
+package dev.mrussu.pharmacy.config
 
+import dev.mrussu.pharmacy.db.Database
+import dev.mrussu.pharmacy.db.DatabaseInitializer
 import freemarker.cache.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -15,6 +17,9 @@ import java.sql.DriverManager
 
 fun Application.configureDatabases() {
     val dbConnection: Connection = connectToPostgres(embedded = false)
+
+    Database.connection = dbConnection
+    DatabaseInitializer.initialize(dbConnection)
 }
 
 fun Application.connectToPostgres(embedded: Boolean): Connection {
