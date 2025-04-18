@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/styles.css" form="text/css">
+    <link rel="stylesheet" href="/pharmacy/static/css/styles.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>Use By Dates</title>
+    <title>Pharmacy | Use By Dates</title>
 </head>
 <body>
 <div class="container">
@@ -19,19 +19,19 @@
             </tr>
         </thead>
         <tr>
-            <td><input type="number" id="daysLeft" placeholder="Days Left" value="28" min="1" max="365" /></td>
+            <td><input type="number" id="daysLeft" class="select-on-focus" placeholder="Days Left" value="28" min="1" max="365" /></td>
             <td>${today}</td>
-            <td><span id="useBy" class="expires-date"></span></td>
+            <td class="column-use-by"><span id="useBy" class="use-by"></span></td>
         </tr>
     </table>
     <h1>Medication Use By Dates</h1>
     <table class="use-by-table">
         <thead>
             <tr>
-                <th><input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Filter by name" /></th>
-                <th>Form</th>
-                <th>Days</th>
-                <th>Use By</th>
+                <th><input type="text" id="filter" class="select-on-focus" placeholder="Filter by name & form" /></th>
+                <th class="column-form">Form</th>
+                <th class="column-days">Days</th>
+                <th class="column-use-by">Use By</th>
                 <th class="column-location">Location</th>
             </tr>
         </thead>
@@ -43,10 +43,19 @@
                 data-days="${med.useByDays}"
                 data-expires="${med.useBy}"
                 data-location="${med.location!''}">
-                <td>${med.name}</td>
-                <td>${med.form}</td>
-                <td>${med.useByDays}</td>
-                <td><span class="expires-date">${med.useBy}</span></td>
+                <td class="column-name">
+                    ${med.name}
+                    <#if med.form?has_content>
+                        <span class="form-label">${med.form}</span>
+                    </#if>
+                </td>
+                <td class="column-form">
+                    <#if med.form?has_content>
+                        <span class="form-label">${med.form}</span>
+                    </#if>
+                </td>
+                <td class="column-days">${med.useByDays}</td>
+                <td class="column-use-by"><span class="use-by">${med.useBy}</span></td>
                 <td class="column-location">${med.location!''}</td>
             </tr>
         </#list>
@@ -64,11 +73,14 @@
 </div>
 <script>
     function filterTable() {
-        const input = document.getElementById("filterInput").value.toLowerCase();
+        const input = document.getElementById("filter").value.toLowerCase();
         const rows = document.querySelectorAll(".use-by-table tbody tr");
+
         rows.forEach(row => {
-            const name = row.cells[0].innerText.toLowerCase();
-            row.style.display = name.includes(input) ? "" : "none";
+            const name = row.dataset.name?.toLowerCase() || "";
+            const form = row.dataset.form?.toLowerCase() || "";
+
+            row.style.display = (name.includes(input) || form.includes(input)) ? "" : "none";
         });
     }
 
@@ -107,7 +119,7 @@
     document.querySelectorAll(".med-row").forEach(row => {
         row.addEventListener("click", () => {
             const name = row.dataset.name;
-            const form = row.dataset.form;
+            const form = row.dataset.form || '–';
             const days = row.dataset.days;
             const expires = row.dataset.expires;
             const location = row.dataset.location || '–';
@@ -116,13 +128,19 @@
             document.getElementById("modal-body").innerHTML =
                 "<strong>Form:</strong> " + form + "<br>" +
                 "<strong>Days:</strong> " + days + "<br>" +
-                "<strong>Use By:</strong> <span class=\"expires-date\">" + expires + "</span><br>" +
+                "<strong>Use By:</strong> <span class=\"use-by\">" + expires + "</span><br>" +
                 "<strong>Location:</strong> " + location;
             document.getElementById("modal").classList.remove("hidden");
         });
     });
     document.getElementById("modal-close").addEventListener("click", () => {
         document.getElementById("modal").classList.add("hidden");
+    });
+    document.getElementById("filter").addEventListener("keyup", filterTable);
+    document.querySelectorAll(".select-on-focus").forEach(input => {
+        input.addEventListener("focus", function () {
+            this.select();
+        });
     });
     updateUseBy();
 </script>

@@ -95,13 +95,20 @@ th {
 .use-by-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-.use-by-table tbody tr:hover {
-    background-color: #ffeb3b;
-    transition: background-color 0.3s ease;
-}
-.expires-date {
+.use-by {
     color: #F44336;
     font-weight: bold;
+}
+.form-label {
+    font-size: 0.85em;
+    font-weight: bold;
+    background-color: #ccc;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.column-name .form-label {
+    display: none;
+    margin-right: 4px;
 }
 .modal {
     position: fixed;
@@ -133,7 +140,9 @@ th {
     padding: 0 8px 8px 8px;
 }
 .modal-title {
+    display: block;
     font-weight: bold;
+    margin-right: 34px;
 }
 .modal-close {
     position: absolute;
@@ -149,7 +158,28 @@ th {
 .hidden {
     display: none;
 }
+@media (hover: hover) {
+    .use-by-table tbody tr:hover {
+        background-color: #ffeb3b;
+        transition: background-color 0.3s ease;
+    }
+}
+@media (max-width: 380px) {
+    .column-days {
+        display: none;
+    }
+}
 @media (max-width: 768px) {
+    h1 {
+        font-size: x-large;
+    }
+    h2 {
+        font-size: large;
+    }
+    .column-name .form-label {
+        display: inline;
+    }
+    .column-form,
     .column-location {
         display: none;
     }

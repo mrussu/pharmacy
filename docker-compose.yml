@@ -1,0 +1,46 @@
+services:
+  pharmacy:
+    platform: linux/amd64
+    image: mrussu/pharmacy:latest
+    container_name: ktor-pharmacy
+    expose:
+      - "8080"
+    networks:
+      - pharmacy_network
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-I", "http://127.0.0.1:8080/health"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  db:
+    platform: linux/amd64
+    image: postgres:17
+    container_name: postgres-db
+    restart: unless-stopped
+    networks:
+      - pharmacy_network
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres} || exit 1"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+networks:
+  pharmacy_network:
+    external: true

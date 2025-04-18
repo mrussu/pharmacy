@@ -10,11 +10,12 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
 
 fun Application.configureTemplating() {
     install(FreeMarker) {
-        templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
+        templateLoader = FileTemplateLoader(File("templates"))
     }
 }
