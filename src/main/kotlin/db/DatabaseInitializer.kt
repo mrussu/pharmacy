@@ -37,7 +37,7 @@ object DatabaseInitializer {
                     ('Humalog Mix 50/50', 'Vial', 28, ''),
                     ('Humalog Mix 75/25', 'Pen', 10, ''),
                     ('Humalog Mix 75/25', 'Vial', 28, ''),
-                    ('Novolog Mix 70/30', 'Pen', 14, ''),
+                    ('Novolog Mix 70/30', 'Pen', 14, 'FRIDGE A-DOOR 2: 05-01-03'),
                     ('Novolog Mix 70/30', 'Vial', 28, ''),
                     ('Humulin 70/30 (NPH/Regular)', 'Pen', 10, ''),
                     ('Humulin 70/30 (NPH/Regular)', 'Vial', 31, ''),

@@ -79,6 +79,11 @@ th {
 }
 .menu li a:hover {
 }
+.today-date {
+    text-align: center;
+    font-weight: bold;
+    color: #2196F3;
+}
 .use-by-table {
 }
 .use-by-table th,

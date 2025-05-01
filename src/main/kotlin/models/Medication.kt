@@ -5,5 +5,6 @@ data class Medication(
     val name: String,
     val form: String,
     val useByDays: Int,
-    val location: String?
+    val useBy: String? = null,
+    val location: String? = null
 )

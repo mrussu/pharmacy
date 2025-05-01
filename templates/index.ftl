@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Tools</h1>
+    <h1>Pharmacy Tools</h1>
     <ul class="menu">
         <#list menu as item>
             <li><a href="/pharmacy/${item.href}">${item.name}</a></li>

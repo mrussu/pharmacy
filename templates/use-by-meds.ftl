@@ -8,38 +8,24 @@
     <meta http-equiv="Expires" content="0" />
     <link rel="stylesheet" href="/pharmacy/static/css/styles.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>Pharmacy | Use By Dates</title>
+    <title>Pharmacy | Use By Dates by Medication</title>
 </head>
 <body>
 <div class="container">
-    <h1>Calculate Use By Date</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Days Left</th>
-                <th>Today</th>
-                <th>Use By</th>
-            </tr>
-        </thead>
-        <tr>
-            <td><input type="number" id="daysLeft" class="select-on-focus" placeholder="Days Left" value="28" min="1" max="365" /></td>
-            <td>${today}</td>
-            <td class="column-use-by"><span id="useBy" class="use-by"></span></td>
-        </tr>
-    </table>
-    <h1>Medication Use By Dates</h1>
+    <h1>Use By Dates by Medication</h1>
+    <p class="today-date">Today: ${today}</p>
     <table class="use-by-table">
         <thead>
-            <tr>
-                <th><input type="text" id="filter" class="select-on-focus" placeholder="Filter by name & form" /></th>
-                <th class="column-form">Form</th>
-                <th class="column-days">Days</th>
-                <th class="column-use-by">Use By</th>
-                <th class="column-location">Location</th>
-            </tr>
+        <tr>
+            <th><input type="text" id="filter" class="select-on-focus" placeholder="Filter by name & form" /></th>
+            <th class="column-form">Form</th>
+            <th class="column-days">Days</th>
+            <th class="column-use-by">Use By</th>
+            <th class="column-location">Location</th>
+        </tr>
         </thead>
         <tbody>
-        <#list medications as med>
+        <#list meds as med>
             <tr class="med-row"
                 data-name="${med.name}"
                 data-form="${med.form}"
@@ -87,38 +73,6 @@
         });
     }
 
-    function formatDate(date) {
-        const mm = String(date.getMonth() + 1).padStart(2, '0');
-        const dd = String(date.getDate()).padStart(2, '0');
-        const yy = String(date.getFullYear()).slice(-2);
-        return mm + '/' + dd + '/' + yy;
-    }
-
-    function updateUseBy() {
-        const maxDigits = 3;
-        const input = document.getElementById("daysLeft");
-        const output = document.getElementById("useBy");
-
-        input.value = input.value.replace(/[^0-9]/g, '');
-
-        if (input.value.length > maxDigits) {
-            input.value = input.value.slice(0, maxDigits);
-        }
-
-        let days = parseInt(input.value);
-
-        if (!isNaN(days)) {
-            days = Math.max(1, Math.min(days, 365));
-            input.value = days;
-            const today = new Date();
-            today.setDate(today.getDate() + days);
-            output.innerText = formatDate(today);
-        } else {
-            output.innerText = '';
-        }
-    }
-
-    document.getElementById("daysLeft").addEventListener("input", updateUseBy);
     document.querySelectorAll(".med-row").forEach(row => {
         row.addEventListener("click", () => {
             const name = row.dataset.name;
@@ -145,7 +99,6 @@
             this.select();
         });
     });
-    updateUseBy();
 </script>
 </body>
 </html>
