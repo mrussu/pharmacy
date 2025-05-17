@@ -8,7 +8,7 @@ object MedicationRepository {
     fun getAll(connection: Connection): List<Medication> {
         val medications = mutableListOf<Medication>()
         val statement = connection.createStatement()
-        val result = statement.executeQuery("SELECT * FROM medication_use_by")
+        val result = statement.executeQuery("SELECT * FROM medication_use_by ORDER BY id;")
 
         while (result.next()) {
             medications.add(

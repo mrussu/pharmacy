@@ -12,6 +12,9 @@
 </head>
 <body>
 <div class="container">
+    <div class="menu light">
+        <a href="/pharmacy">Pharmacy Tools</a>
+    </div>
     <h1>Use By Date Calculator</h1>
     <p class="today-date">Today: ${today}</p>
     <table>

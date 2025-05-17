@@ -4,7 +4,7 @@
 }
 body {
     width: 100%;
-    background: #ffffff;
+    background: #fff;
     font-size: large;
     font-family: 'Open Sans', Arial, sans-serif;
     line-height: 1.5;
@@ -47,9 +47,11 @@ input, select {
 }
 table {
     width: 100%;
+    border-color: #808080;
     border-collapse: collapse;
 }
 th, td {
+    position: relative;
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
@@ -71,18 +73,22 @@ th {
     padding: 0;
     margin: 0 auto;
 }
-.menu li {
+.menu {
     text-align: center;
 }
-.menu li a {
+.menu a {
     font-size: x-large;
 }
-.menu li a:hover {
+.menu a:hover {
+}
+.menu.light a {
+    font-size: smaller;
+    color: #9e9e9e;
 }
 .today-date {
     text-align: center;
     font-weight: bold;
-    color: #2196F3;
+    color: #2196f3;
 }
 .use-by-table {
 }
@@ -90,30 +96,74 @@ th {
 .use-by-table td {
     text-align: center;
 }
+.tray-guide-table th,
+.tray-guide-table td {
+    text-align: right;
+}
 .use-by-table td:first-child,
-.use-by-table th:first-child {
+.use-by-table th:first-child,
+.tray-guide-table th:first-child,
+.tray-guide-table td:first-child {
     text-align: left;
 }
 .use-by-table tbody tr {
     cursor: pointer;
 }
-.use-by-table tbody tr:nth-child(even) {
+.use-by-table tbody tr:nth-child(even),
+.tray-guide-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 .use-by {
-    color: #F44336;
+    color: #f44336;
     font-weight: bold;
 }
 .form-label {
+    display: block;
+    position: relative;
     font-size: 0.85em;
     font-weight: bold;
     background-color: #ccc;
-    padding: 2px 6px;
+    padding: 4px 8px;
     border-radius: 4px;
 }
 .column-name .form-label {
     display: none;
-    margin-right: 4px;
+    margin-left: 4px;
+}
+.column-label span,
+.column-label .tray-label span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    border-left: 2px solid;
+    padding: 0 8px;
+}
+.column-label .hint,
+.column-dimensions .hint {
+    font-size: smaller;
+    border: none;
+    color: #9e9e9e;
+}
+.column-cells {
+    font-weight: bold;
+}
+.column-cells span {
+    font-weight: bold;
+    color: #2196f3;
+}
+.tray-label {
+    display: block;
+    position: relative;
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+.tray-label,
+.tray-label span {
+    font-weight: bold;
 }
 .modal {
     position: fixed;
@@ -160,17 +210,31 @@ th {
     text-align: center;
     cursor: pointer;
 }
+.nowrap {
+    white-space: nowrap;
+}
 .hidden {
     display: none;
 }
 @media (hover: hover) {
-    .use-by-table tbody tr:hover {
+    .use-by-table tbody tr:hover,
+    .tray-guide-table tbody tr:hover {
         background-color: #ffeb3b;
         transition: background-color 0.3s ease;
     }
 }
 @media (max-width: 380px) {
     .column-days {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    .column-dimensions {
+        display: none;
+    }
+}
+@media (max-width: 576px) {
+    .column-dimensions .hint {
         display: none;
     }
 }

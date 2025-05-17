@@ -2,8 +2,10 @@ package dev.mrussu.pharmacy.routes
 
 import dev.mrussu.pharmacy.db.Database
 import dev.mrussu.pharmacy.db.MedicationRepository
+import dev.mrussu.pharmacy.db.XR2Repository
 import dev.mrussu.pharmacy.models.Link
 import dev.mrussu.pharmacy.models.Medication
+import dev.mrussu.pharmacy.models.XR2Tray
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.freemarker.*
@@ -26,7 +28,8 @@ fun Application.configureRouting() {
             get("/") {
                 val menu = listOf(
                     Link("Use By Date Calculator", "use-by/calc"),
-                    Link("Use By Dates by Medication", "use-by/meds")
+                    Link("Use By Dates by Medication", "use-by/meds"),
+                    Link("XR2 Tray Guide", "xr2/tray-guide")
                 )
 
                 call.respond(
@@ -65,6 +68,18 @@ fun Application.configureRouting() {
                     )
                 )
             }
+            get("/xr2/tray-guide") {
+                val trays = getXR2Trays()
+
+                call.respond(
+                    FreeMarkerContent(
+                        template = "xr2-tray-guide.ftl",
+                        model = mutableMapOf(
+                            "trays" to trays,
+                        )
+                    )
+                )
+            }
             staticFiles("/static", File("static"))
         }
     }
@@ -81,4 +96,8 @@ fun getMedications(today: LocalDate, formatter: DateTimeFormatter): List<Medicat
             location = it.location
         )
     }
+}
+
+fun getXR2Trays(): List<XR2Tray> {
+    return XR2Repository.getTransferTrays(Database.connection)
 }

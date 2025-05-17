@@ -16,13 +16,25 @@ object DatabaseInitializer {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         """.trimIndent()
+        val createTraysTable = """
+            CREATE TABLE IF NOT EXISTS xr2_tray (
+                id SERIAL PRIMARY KEY,
+                type TEXT NOT NULL,
+                slots SMALLINT NOT NULL DEFAULT 1,
+                cols SMALLINT NOT NULL CHECK (cols > 0),
+                rows SMALLINT NOT NULL CHECK (rows > 0),
+                color TEXT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """.trimIndent()
 
         statement.executeUpdate(createMedicationsTable)
+        statement.executeUpdate(createTraysTable)
 
-        val result = statement.executeQuery("SELECT COUNT(*) FROM medication_use_by")
-        val count = if (result.next()) result.getInt(1) else 0
+        val resultMedications = statement.executeQuery("SELECT COUNT(*) FROM medication_use_by")
+        val medicationCount = if (resultMedications.next()) resultMedications.getInt(1) else 0
 
-        if (count == 0) {
+        if (medicationCount == 0) {
             val seedMedicationsTable = """
                 INSERT INTO medication_use_by (name, form, use_by_days, location) VALUES
                     ('Humulin R U-500 (Insulin Regular)', 'Pen', 28, 'FRIDGE A-DOOR 2: 02-01-01'),
@@ -39,7 +51,7 @@ object DatabaseInitializer {
                     ('Humalog Mix 75/25', 'Vial', 28, ''),
                     ('Novolog Mix 70/30', 'Pen', 14, 'FRIDGE A-DOOR 2: 05-01-03'),
                     ('Novolog Mix 70/30', 'Vial', 28, ''),
-                    ('Humulin 70/30 (NPH/Regular)', 'Pen', 10, ''),
+                    ('Humulin 70/30 (NPH/Regular)', 'Pen', 10, 'FRIDGE A-DOOR 2: 01-03-04'),
                     ('Humulin 70/30 (NPH/Regular)', 'Vial', 31, ''),
                     ('Humulin N (NPH - Insulin Isophane)', 'Pen', 14, ''),
                     ('Humulin N (NPH - Insulin Isophane)', 'Vial', 31, 'FRIDGE A-DOOR 2: 05-04-03'),
@@ -62,7 +74,7 @@ object DatabaseInitializer {
                     ('Famotidine', '', 90, ''),
                     ('Latanoprost', 'Ophthalmic', 42, 'FRIDGE C-DOOR 1: 03-01-02'),
                     ('Lorazepam', '', 30, ''),
-                    ('Rocuronium', 'Injection', 60, ''),
+                    ('Rocuronium', 'Vial', 60, 'FRIDGE C-DOOR 2: 03-04-01'),
                     ('Succinylcholine', 'Injection', 14, ''),
                     ('Vasopressin', '', 365, ''),
                     ('SMOG', 'Enema', 30, ''),
@@ -72,6 +84,27 @@ object DatabaseInitializer {
 
             statement.executeUpdate(seedMedicationsTable)
         }
+
+        val resultTrays = statement.executeQuery("SELECT COUNT(*) FROM xr2_tray")
+        val trayCount = if (resultTrays.next()) resultTrays.getInt(1) else 0
+
+        if (trayCount == 0) {
+            val seedTraysTable = """
+                INSERT INTO xr2_tray (type, slots, cols, rows, color) VALUES
+                    ('Small Card', 1, 5, 4,        '#b9e67a'),
+                    ('Large Card', 1, 3, 3,        '#77c24c'),
+                    ('Long Card', 1, 3, 6,         '#4e9b23'),
+                    ('Oral Solid', 1, 12, 11,      '#f29cb8'),
+                    ('Large Oral Solid', 1, 7, 6,  '#e36e95'),
+                    ('Small Vial', 1, 12, 14,      '#6dbefa'),
+                    ('Medium Vial', 2, 8, 10,      '#309be9'),
+                    ('Large Liquid Cup', 2, 10, 6, '#45dfbe'),
+                    ('Syringe', 2, 3, 8,           '#f26e3d');
+            """.trimIndent()
+
+            statement.executeUpdate(seedTraysTable)
+        }
+
         statement.close()
     }
 }
